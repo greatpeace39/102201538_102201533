@@ -51,56 +51,96 @@
 <div class="container">
     <h1>项目管理系统</h1>
 
-    <!-- 项目管理部分 -->
-    <div class="section">
-        <h2>项目管理</h2>
+    <!-- 导航菜单 -->
+    <ul class="nav nav-tabs mb-4" id="projectManagementTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="create-project-tab" data-bs-toggle="tab" data-bs-target="#create-project" type="button" role="tab" aria-controls="create-project" aria-selected="true">创建项目</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="manage-project-tab" data-bs-toggle="tab" data-bs-target="#manage-project" type="button" role="tab" aria-controls="manage-project" aria-selected="false">项目管理</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="all-projects-tab" data-bs-toggle="tab" data-bs-target="#all-projects" type="button" role="tab" aria-controls="all-projects" aria-selected="false">所有项目列表</button>
+        </li>
+    </ul>
 
-        <!-- 创建项目表单 -->
-        <div class="mb-4">
-            <h4>创建项目</h4>
-            <form id="createProjectForm">
-                <div class="mb-3">
-                    <label for="projectName" class="form-label">项目名称:</label>
-                    <input type="text" class="form-control" id="projectName" placeholder="输入项目名称" required>
+    <!-- Tab 内容 -->
+    <div class="tab-content" id="projectManagementTabsContent">
+        <!-- 创建项目 Tab Pane -->
+        <div class="tab-pane fade show active" id="create-project" role="tabpanel" aria-labelledby="create-project-tab">
+            <div class="section">
+                <h2>创建项目</h2>
+
+                <!-- 创建项目表单 -->
+                <div class="mb-4">
+                    <form id="createProjectForm">
+                        <div class="mb-3">
+                            <label for="projectName" class="form-label">项目名称:</label>
+                            <input type="text" class="form-control" id="projectName" placeholder="输入项目名称" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="projectDescription" class="form-label">描述:</label>
+                            <textarea class="form-control" id="projectDescription" placeholder="输入项目描述" rows="3" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="ownerId" class="form-label">所有者 ID:</label>
+                            <input type="number" class="form-control" id="ownerId" placeholder="输入所有者 ID" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">创建项目</button>
+                    </form>
                 </div>
-                <div class="mb-3">
-                    <label for="projectDescription" class="form-label">描述:</label>
-                    <textarea class="form-control" id="projectDescription" placeholder="输入项目描述" rows="3" required></textarea>
-                </div>
-                <div class="mb-3">
-                    <label for="ownerId" class="form-label">所有者 ID:</label>
-                    <input type="number" class="form-control" id="ownerId" placeholder="输入所有者 ID" required>
-                </div>
-                <button type="submit" class="btn btn-primary">创建项目</button>
-            </form>
+            </div>
         </div>
 
-        <hr>
+        <!-- 项目管理 Tab Pane -->
+        <div class="tab-pane fade" id="manage-project" role="tabpanel" aria-labelledby="manage-project-tab">
+            <div class="section">
+                <h2>项目管理</h2>
 
-        <!-- 按所有者ID获取项目 -->
-        <div class="mb-4">
-            <h4>按所有者 ID 获取项目</h4>
-            <form id="getProjectsByOwnerForm" class="row g-3">
-                <div class="col-auto">
-                    <label for="ownerSearchId" class="visually-hidden">所有者 ID</label>
-                    <input type="number" class="form-control" id="ownerSearchId" placeholder="输入所有者 ID" required>
+                <!-- 输入用户 ID -->
+                <div class="mb-4">
+                    <h4>查询项目</h4>
+                    <form id="queryUserProjectsForm" class="row g-3">
+                        <div class="col-auto">
+                            <label for="userIdInput" class="visually-hidden">用户 ID</label>
+                            <input type="number" class="form-control" id="userIdInput" placeholder="输入您的用户 ID" required>
+                        </div>
+                        <div class="col-auto">
+                            <button type="submit" class="btn btn-primary">查询</button>
+                        </div>
+                    </form>
                 </div>
-                <div class="col-auto">
-                    <button type="submit" class="btn btn-success">获取项目</button>
+
+                <!-- 显示创建的项目 -->
+                <div class="mb-4">
+                    <h4>您创建的项目:</h4>
+                    <div id="createdProjectsList" class="row"></div>
                 </div>
-            </form>
+
+                <!-- 显示加入的项目 -->
+                <div class="mb-4">
+                    <h4>您加入的项目:</h4>
+                    <div id="joinedProjectsList" class="row"></div>
+                </div>
+            </div>
         </div>
 
-        <!-- 获取所有项目 -->
-        <div class="mb-4">
-            <h4>获取所有项目</h4>
-            <button onclick="getAllProjects()" class="btn btn-info">获取所有项目</button>
-        </div>
+        <!-- 所有项目列表 Tab Pane -->
+        <div class="tab-pane fade" id="all-projects" role="tabpanel" aria-labelledby="all-projects-tab">
+            <div class="section">
+                <h2>所有项目列表</h2>
 
-        <!-- 显示项目列表 -->
-        <div>
-            <h4>项目列表:</h4>
-            <div id="projectsList" class="row"></div>
+                <!-- 获取所有项目 -->
+                <div class="mb-4">
+                    <button onclick="getAllProjects()" class="btn btn-info">获取所有项目</button>
+                </div>
+
+                <!-- 显示项目列表 -->
+                <div>
+                    <h4>项目列表:</h4>
+                    <div id="allProjectsListAll" class="row"></div> <!-- 修改ID以避免重复 -->
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -160,10 +200,8 @@
                 // 清空表单
                 document.getElementById('createProjectForm').reset();
 
-                // 将新项目添加到项目列表中
-                const projectsList = document.getElementById('projectsList');
-                const projectCard = createProjectCard(createdProject);
-                projectsList.insertAdjacentHTML('beforeend', projectCard);
+                // 将新项目添加到创建的项目列表中
+                addCreatedProjectToList(createdProject);
             })
             .catch(error => {
                 console.error("创建项目时出错:", error);
@@ -175,39 +213,66 @@
             });
     });
 
-    // 按所有者ID获取项目
-    document.getElementById('getProjectsByOwnerForm').addEventListener('submit', function(e) {
+    // 查询用户的创建和加入项目
+    document.getElementById('queryUserProjectsForm').addEventListener('submit', function(e) {
         e.preventDefault();
 
-        const ownerSearchId = document.getElementById('ownerSearchId').value.trim();
+        const userId = document.getElementById('userIdInput').value.trim();
 
-        if (!ownerSearchId) {
-            showAlert("请输入所有者 ID。", "warning");
+        if (!userId) {
+            showAlert("请输入您的用户 ID。", "warning");
             return;
         }
 
-        axios.get(`/api/projects/owner/${ownerSearchId}`)
+        // 查询创建的项目
+        axios.get(`/api/projects/owner/${userId}`)
             .then(response => {
-                const projects = response.data;
-                const projectsList = document.getElementById('projectsList');
-                projectsList.innerHTML = ''; // 清空之前的结果
+                const createdProjects = response.data;
+                const createdProjectsList = document.getElementById('createdProjectsList');
+                createdProjectsList.innerHTML = ''; // 清空之前的结果
 
-                if (projects.length === 0) {
-                    projectsList.innerHTML = '<p>未找到该所有者的项目。</p>';
+                if (createdProjects.length === 0) {
+                    createdProjectsList.innerHTML = '<p>您尚未创建任何项目。</p>';
                     return;
                 }
 
-                projects.forEach(project => {
-                    const projectCard = createProjectCard(project);
-                    projectsList.insertAdjacentHTML('beforeend', projectCard);
+                createdProjects.forEach(project => {
+                    const projectCard = createCreatedProjectCard(project);
+                    createdProjectsList.insertAdjacentHTML('beforeend', projectCard);
                 });
             })
             .catch(error => {
-                console.error("获取项目时出错:", error);
+                console.error("获取创建的项目时出错:", error);
                 if (error.response && error.response.data) {
-                    showAlert(`获取项目失败: ${error.response.data}`, "danger");
+                    showAlert(`获取创建的项目失败: ${error.response.data}`, "danger");
                 } else {
-                    showAlert("获取项目失败，请稍后再试。", "danger");
+                    showAlert("获取创建的项目失败，请稍后再试。", "danger");
+                }
+            });
+
+        // 查询加入的项目
+        axios.get(`/api/projects/joined/${userId}`)
+            .then(response => {
+                const joinedProjects = response.data;
+                const joinedProjectsList = document.getElementById('joinedProjectsList');
+                joinedProjectsList.innerHTML = ''; // 清空之前的结果
+
+                if (joinedProjects.length === 0) {
+                    joinedProjectsList.innerHTML = '<p>您尚未加入任何项目。</p>';
+                    return;
+                }
+
+                joinedProjects.forEach(project => {
+                    const projectCard = createJoinedProjectCard(project);
+                    joinedProjectsList.insertAdjacentHTML('beforeend', projectCard);
+                });
+            })
+            .catch(error => {
+                console.error("获取加入的项目时出错:", error);
+                if (error.response && error.response.data) {
+                    showAlert(`获取加入的项目失败: ${error.response.data}`, "danger");
+                } else {
+                    showAlert("获取加入的项目失败，请稍后再试。", "danger");
                 }
             });
     });
@@ -217,7 +282,7 @@
         axios.get('/api/projects/all')
             .then(response => {
                 const allProjects = response.data;
-                const projectsList = document.getElementById('projectsList');
+                const projectsList = document.getElementById('allProjectsListAll'); // 修改为特定的列表ID
                 projectsList.innerHTML = ''; // 清空之前的结果
 
                 if (allProjects.length === 0) {
@@ -240,25 +305,120 @@
             });
     }
 
-    // 创建项目卡片的辅助函数
-    function createProjectCard(project) {
+    // 创建创建的项目卡片的辅助函数
+    function createCreatedProjectCard(project) {
         return `
-                <div class="col-md-6 project-card">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">${project.title}</h5>
-                            <p class="card-text">${project.description}</p>
-                            <p class="card-text"><strong>ID:</strong> ${project.id}</p>
-                            <p class="card-text"><strong>所有者 ID:</strong> ${project.ownerId}</p>
-                            <p class="card-text"><strong>成员数量:</strong> ${project.numbers}</p>
-                            <button class="btn btn-outline-primary" onclick="openJoinProjectModal(${project.id})">加入项目</button>
-                        </div>
+            <div class="col-md-6 project-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">${project.title}</h5>
+                        <p class="card-text">${project.description}</p>
+                        <p class="card-text"><strong>ID:</strong> ${project.id}</p>
+                        <p class="card-text"><strong>所有者 ID:</strong> ${project.ownerId}</p>
+                        <p class="card-text"><strong>成员数量:</strong> ${project.numbers}</p>
+                        <button class="btn btn-outline-danger" onclick="deleteProject(${project.id}, ${project.ownerId})">删除项目</button>
                     </div>
                 </div>
-            `;
+            </div>
+        `;
     }
 
-    // 打开加入项目Modal
+    // 创建加入的项目卡片的辅助函数
+    function createJoinedProjectCard(project) {
+        return `
+            <div class="col-md-6 project-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">${project.title}</h5>
+                        <p class="card-text">${project.description}</p>
+                        <p class="card-text"><strong>ID:</strong> ${project.id}</p>
+                        <p class="card-text"><strong>所有者 ID:</strong> ${project.ownerId}</p>
+                        <p class="card-text"><strong>成员数量:</strong> ${project.numbers}</p>
+                        <button class="btn btn-outline-warning" onclick="exitProject(${project.id})">退出项目</button>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    // 创建所有项目卡片的辅助函数
+    function createProjectCard(project) {
+        return `
+            <div class="col-md-6 project-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">${project.title}</h5>
+                        <p class="card-text">${project.description}</p>
+                        <p class="card-text"><strong>ID:</strong> ${project.id}</p>
+                        <p class="card-text"><strong>所有者 ID:</strong> ${project.ownerId}</p>
+                        <p class="card-text"><strong>成员数量:</strong> ${project.numbers}</p>
+                        <button class="btn btn-outline-primary" onclick="openJoinProjectModal(${project.id})">加入项目</button>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    // 将新项目添加到创建的项目列表中
+    function addCreatedProjectToList(project) {
+        const createdProjectsList = document.getElementById('createdProjectsList');
+        const projectCard = createCreatedProjectCard(project);
+        createdProjectsList.insertAdjacentHTML('beforeend', projectCard);
+    }
+
+    // 删除项目
+    function deleteProject(projectId, userId) {
+        if (!confirm("确定要删除此项目吗？")) {
+            return;
+        }
+
+        axios.delete(`/api/projects/delete/${projectId}/${userId}`)
+            .then(response => {
+                showAlert("项目删除成功。", "success");
+                // 移除项目卡片
+                removeProjectCard(projectId, 'createdProjectsList');
+            })
+            .catch(error => {
+                console.error("删除项目时出错:", error);
+                if (error.response && error.response.data) {
+                    showAlert(`删除项目失败: ${error.response.data}`, "danger");
+                } else {
+                    showAlert("删除项目失败，请稍后再试。", "danger");
+                }
+            });
+    }
+
+    // 退出项目
+    function exitProject(projectId) {
+        if (!confirm("确定要退出此项目吗？")) {
+            return;
+        }
+
+        // 假设当前用户的ID是通过输入框获取的
+        const userId = document.getElementById('userIdInput').value.trim();
+
+        if (!userId) {
+            showAlert("请先输入您的用户 ID。", "warning");
+            return;
+        }
+
+        axios.post(`/api/projects/exit/${projectId}`,  { userId: parseInt(userId, 10) })
+            .then(response => {
+                showAlert("成功退出项目。", "success");
+                // 移除项目卡片
+                removeProjectCard(projectId, 'joinedProjectsList');
+            })
+            .catch(error => {
+                console.error("退出项目时出错:", error);
+                if (error.response && error.response.data) {
+                    showAlert(`退出项目失败: ${error.response.data}`, "danger");
+                } else {
+                    showAlert("退出项目失败，请稍后再试。", "danger");
+                }
+            });
+    }
+
+    // 加入项目 Modal
     function openJoinProjectModal(projectId) {
         currentProjectId = projectId;
         const joinProjectModal = new bootstrap.Modal(document.getElementById('joinProjectModal'));
@@ -289,8 +449,8 @@
                 const joinProjectModal = bootstrap.Modal.getInstance(joinProjectModalEl);
                 joinProjectModal.hide();
 
-                // 可选：更新项目的numbers字段
-                getAllProjects();
+                // 重新查询用户的项目列表
+                queryUserProjects(parseInt(joinUserId, 10));
             })
             .catch(error => {
                 console.error("加入项目时出错:", error);
@@ -307,11 +467,11 @@
         const alertPlaceholder = document.getElementById('alertPlaceholder');
         const wrapper = document.createElement('div');
         wrapper.innerHTML = `
-                <div class="alert alert-${type} alert-dismissible fade show" role="alert">
-                    ${message}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="关闭"></button>
-                </div>
-            `;
+            <div class="alert alert-${type} alert-dismissible fade show" role="alert">
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="关闭"></button>
+            </div>
+        `;
         alertPlaceholder.appendChild(wrapper);
 
         // 自动移除通知
@@ -321,6 +481,19 @@
         }, 5000);
     }
 
+    // 移除项目卡片的辅助函数
+    function removeProjectCard(projectId, listId) {
+        const projectsList = document.getElementById(listId);
+        const projectCards = projectsList.getElementsByClassName('project-card');
+        for (let card of projectCards) {
+            const cardIdText = card.querySelectorAll('.card-text strong')[0].nextSibling.textContent.trim();
+            if (parseInt(cardIdText) === projectId) {
+                projectsList.removeChild(card);
+                break;
+            }
+        }
+    }
+
     // 初始化：创建一个通知区域
     window.onload = function() {
         const container = document.querySelector('.container');
@@ -328,6 +501,9 @@
         alertPlaceholder.id = 'alertPlaceholder';
         alertPlaceholder.className = 'mb-3';
         container.insertBefore(alertPlaceholder, container.firstChild);
+
+        // 默认加载所有项目
+        getAllProjects();
     }
 </script>
 

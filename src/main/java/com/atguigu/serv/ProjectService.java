@@ -24,4 +24,6 @@ public class ProjectService {
     public List<Project> findAllProjects() {
         return projectMapper.findAllProjects();
     }
+
+    public void deletebyid(Long projectId) {projectMapper.deleteByProject(projectId);}
 }

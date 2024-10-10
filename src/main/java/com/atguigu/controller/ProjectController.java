@@ -23,9 +23,9 @@ public class ProjectController {
         return project;
     }
 
-    @GetMapping("/owner/{ownerId}")
-    public List<Project> getProjectsByOwner(@PathVariable Long ownerId) {
-        return projectService.findProjectsByOwner(ownerId);
+    @GetMapping("/owner/{userId}")
+    public List<Project> getProjectsByOwner(@PathVariable Long userId) {
+        return projectService.findProjectsByOwner(userId);
     }
 
     @GetMapping("/all")
@@ -33,5 +33,9 @@ public class ProjectController {
         return projectService.findAllProjects();
     }
 
+    @DeleteMapping("delete/{projectId}/{userId}")
+    public void deleteprocess(@PathVariable Long projectId) {
+        projectService.deletebyid(projectId);
+    }
 
 }

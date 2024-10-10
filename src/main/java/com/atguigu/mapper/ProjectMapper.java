@@ -19,5 +19,6 @@ public interface ProjectMapper {
     @Select("SELECT * FROM project")
     List<Project> findAllProjects();
 
-
+    @Delete("DELETE FROM project where id  = #{projextId}")
+    void deleteByProject(Long projectId);
 }
